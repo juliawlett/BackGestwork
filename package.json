@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
@@ -28,8 +27,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./index.js localhost 8000",
-    "postinstall": "npm rebuild bcrypt"
+    "start": "nodemon ./index.js localhost 8000"
   },
   "keywords": [],
   "author": "Julia",
