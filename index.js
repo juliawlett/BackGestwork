@@ -5,7 +5,17 @@ const conn = require('./db/conn')
 
 app.use(express.json())
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+const allowedOrigins = [process.env.FRONTEND_URL, 'https://juliafullstack.site'];
+app.use(cors({
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 app.use(express.static('public'))
 
@@ -21,9 +31,13 @@ app.use('/departamento', DepartamentoRoutes)
 app.use('/comentario', ComentariosRoutes)
 app.use('/arquive', ArquiveRoutes)
 
+const PORT = process.env.PORT || 3000;  // Definindo a variável PORT
+
 conn
-    .sync()
-    .then(() => {
-        app.listen(8000)
-    })
-    .catch((err) => console.log(err))
+  .sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));

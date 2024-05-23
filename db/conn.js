@@ -1,17 +1,17 @@
+require('dotenv').config();
 const { Sequelize } = require('sequelize')
-const dados = require('../.env')
 
-const sequelize = new Sequelize(dados.nomeBanco, dados.user, dados.password, { //alterar nome do banco
-    host: 'localhost',
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, { //alterar nome do banco
+    host: process.env.DB_HOST,
     dialect: 'mysql'
 })
 
 try{
     sequelize.authenticate()
-    console.log('Conectado ao banco --->')
+    console.log('Conexão com o banco de dados estabelecida com sucesso.');
 
 } catch(error){
-    console.log('Não foi possivel conectar ao banco ', error)
+    console.error('Não foi possível conectar ao banco de dados:', error);
 }
 
 module.exports = sequelize
